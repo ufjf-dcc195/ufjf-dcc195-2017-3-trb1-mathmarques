@@ -7,9 +7,9 @@ function start(router, handlers) {
         var urlParsed =  url.parse(request.url, true);
 
         router.route(urlParsed.pathname, handlers, request, response);
-    }).listen(80);
+    }).listen(process.env.PORT || 8080);
 
-    console.log('Servidor rodando em http://localhost:80/');
+    console.log('Servidor rodando em http://localhost:8080/');
 }
 
 module.exports.start = start;
