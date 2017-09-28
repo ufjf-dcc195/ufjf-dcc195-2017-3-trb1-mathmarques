@@ -18,7 +18,7 @@ function route(pathname, handlers, request, response) {
         }
     } else {
         console.log("Requisição inválida em " + pathname);
-        handlers['/notfound'](request, response);
+        handlers['/notfound.html'](request, response);
     }
 }
 

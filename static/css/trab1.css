@@ -1,0 +1,13 @@
+html {
+	min-width: 100%;
+	min-height: 100%;
+}
+
+body {
+	padding-top: 51px;
+}
+
+.content {
+    min-height: 500px;
+    background-color: #FFFFFF;
+}
