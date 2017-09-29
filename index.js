@@ -14,6 +14,7 @@ handlers['/teste.html'] = requestHandlers.staticFiles('teste.html');
 handlers['/notfound.html'] = requestHandlers.notFound;
 handlers['/'] = requestHandlers.index;
 handlers['/index.html'] = requestHandlers.index;
+handlers['/sobre.html'] = requestHandlers.about;
 handlers['/intervalo.html'] = requestHandlers.intervalo;
 
 server.start(router, handlers);

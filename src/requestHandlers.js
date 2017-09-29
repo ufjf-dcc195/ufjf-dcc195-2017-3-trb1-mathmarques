@@ -27,6 +27,15 @@ function staticFiles(file) {
     }
 }
 
+// NotFound
+function notFound(request, response) {
+    response.writeHead(404, {'Content-Type': 'text/html'});
+    response.write(template.header);
+    response.write('<h2 class="text-center">#Não encontrado!</h2>');
+    response.write(template.footer);
+    response.end();
+}
+
 // Index
 function index(request, response) {
     response.writeHead(200, {'Content-Type': 'text/html'});
@@ -37,11 +46,15 @@ function index(request, response) {
     response.end();
 }
 
-// NotFound
-function notFound(request, response) {
-    response.writeHead(404, {'Content-Type': 'text/html'});
+// Sobre
+function about(request, response) {
+    response.writeHead(200, {'Content-Type': 'text/html'});
     response.write(template.header);
-    response.write('<h2 class="text-center">#Não encontrado!</h2>');
+    response.write('<h2 class="text-center">#Sobre</h2>');
+    response.write('<p class="text-center"><b>Nome:</b> Matheus de Oliveira do Carmo Marques</p>');
+    response.write('<p class="text-center"><b>Matrícula:</b> 201276052</p>');
+    response.write('<p class="text-center"><b>E-mail:</b> matheusocmarques@gmail.com</p>');
+    response.write('<p class="text-center"><b>Curso:</b> Sistemas de Informação</p>');
     response.write(template.footer);
     response.end();
 }
@@ -66,6 +79,7 @@ function intervalo(request, response) {
 }
 
 exports.staticFiles = staticFiles;
-exports.index = index;
 exports.notFound = notFound;
+exports.index = index;
+exports.about = about;
 exports.intervalo = intervalo;
