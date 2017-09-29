@@ -7,7 +7,7 @@ var handlers = {};
 handlers['/css/bootstrap.css'] = requestHandlers.staticFiles('css/bootstrap.css');
 handlers['/css/trab1.css'] = requestHandlers.staticFiles('css/trab1.css');
 handlers['/css/bootstrap.min.css.map'] = requestHandlers.staticFiles('css/bootstrap.min.css.map');
-handlers['/js/bootstrap.js'] = requestHandlers.staticFiles('css/bootstrap.js');
+handlers['/js/bootstrap.js'] = requestHandlers.staticFiles('js/bootstrap.js');
 handlers['/teste.html'] = requestHandlers.staticFiles('teste.html');
 
 //Routes

@@ -31,7 +31,8 @@ function staticFiles(file) {
 function index(request, response) {
     response.writeHead(200, {'Content-Type': 'text/html'});
     response.write(template.header);
-    response.write('Ola a todos!');
+    response.write('<h2 class="text-center">#Trabalho 1 DCC195</h2>');
+    response.write('<p class="text-center">Utilize o menu superior para acessar as páginas</p>');
     response.write(template.footer);
     response.end();
 }
