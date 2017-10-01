@@ -1,6 +1,7 @@
 var fs = require('fs');
 var path = require('path');
 var template = require('./template').template;
+var chessLib = require('./chess');
 
 // Static Files
 function staticFiles(file) {
@@ -185,13 +186,6 @@ function equation(request, response) {
 
 
 // Xadrez
-function isReacheable(cLinha, cColuna, tLinha, tColuna){
-    return ((cColuna + 2 === tColuna && (cLinha + 1 === tLinha || cLinha - 1 === tLinha))
-         || (cColuna - 2 === tColuna && (cLinha + 1 === tLinha || cLinha - 1 === tLinha))
-         || (cLinha + 2 === tLinha && (cColuna + 1 === tColuna || cColuna - 1 === tColuna))
-         || (cLinha - 2 === tLinha && (cColuna + 1 === tColuna || cColuna - 1 === tColuna)));
-}
-
 function chess(request, response) {
     var isPost = (request.method === 'POST');
     response.writeHead(200, {'Content-Type': 'text/html'});
@@ -202,37 +196,24 @@ function chess(request, response) {
     response.write(' <div class="form-group"><label for="coluna">Coluna: </label> <input type="text" class="form-control" name="coluna" id="coluna" value="'+ (isPost? request.post.coluna : '') +'" placeholder="valor de A a H"></div>');
     response.write(' <button type="submit" class="btn btn-default">Adicionar cavalo</button></form><br/><br/>');
 
+    var board;
     if(isPost) {
         var linha = parseInt(request.post.linha);
         var coluna = request.post.coluna;
 
         if(isNaN(linha) || !(typeof coluna === 'string') || coluna.length !== 1 || linha < 1 || linha > 8 || coluna.charCodeAt(0) < 65 || coluna.charCodeAt(0) > 72) {
             response.write('<p class="text-center">Valores inválidos da posição!</p>');
-            isPost = false;
+            board = chessLib.renderBoard();
         } else {
             linha = 8-linha;
             coluna = coluna.charCodeAt(0) - 65;
+            board = chessLib.renderBoard(linha, coluna);
         }
-    }
+    } else
+        board = chessLib.renderBoard();
 
-    response.write('<table id="chess"><thead><tr><th></th><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th><th>F</th><th>G</th><th>H</th><th></th></tr></thead><tbody>');
-    for(var i = 0; i < 8; i++){
-        response.write('<tr><th>'+(8-i)+'</th>');
-        for(var j = 0; j < 8; j++){
-            if(isPost) {
-                if(i === linha && j === coluna)
-                    response.write('<td>&#9816;</td>');
-                else if (isReacheable(linha, coluna, i, j))
-                    response.write('<td>&otimes;</td>');
-                else
-                    response.write('<td></td>');
-            } else
-             response.write('<td></td>');
-        }
-        response.write('<th>'+(8-i)+'</th>');
-        response.write('</tr>');
-    }
-    response.write('<tr><th></th><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th><th>F</th><th>G</th><th>H</th><th></th></tr></tbody></table>');
+    response.write(board);
+
     response.write(template.footer);
     response.end();
 }
