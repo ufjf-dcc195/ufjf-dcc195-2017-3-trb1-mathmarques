@@ -183,22 +183,57 @@ function equation(request, response) {
     response.end();
 }
 
-function intervalo(request, response) {
-    response.writeHead(200, {'Content-Type': 'text/html'});
-    response.write('<!DOCTYPE html><html><head></head><body>');
-    response.write('<h2>Intervalo!</h2>');
-    response.write('<form method="POST">De: <input type="text" name="from"/>  Ate: <input type="text" name="to"/>  <input type="submit" value="Enviar"/></form><p>');
-    if(request.method === 'POST'){
-        var from = parseInt(request.post.from);
-        var to = parseInt(request.post.to);
 
-        if(isNaN(from) || isNaN(to) || to < from)
-            response.write('Valores invalido!');
-        else
-            for(;from <= to; from++)
-                response.write(from + " ");
+// Xadrez
+function isReacheable(cLinha, cColuna, tLinha, tColuna){
+    return ((cColuna + 2 === tColuna && (cLinha + 1 === tLinha || cLinha - 1 === tLinha))
+         || (cColuna - 2 === tColuna && (cLinha + 1 === tLinha || cLinha - 1 === tLinha))
+         || (cLinha + 2 === tLinha && (cColuna + 1 === tColuna || cColuna - 1 === tColuna))
+         || (cLinha - 2 === tLinha && (cColuna + 1 === tColuna || cColuna - 1 === tColuna)));
+}
+
+function chess(request, response) {
+    var isPost = (request.method === 'POST');
+    response.writeHead(200, {'Content-Type': 'text/html'});
+    response.write(template.header);
+    response.write('<h2 class="text-center">#Xadrez</h2>');
+    response.write('<form class="form-inline" method="POST">');
+    response.write('<div class="form-group"><label for="linha">Linha: </label> <input type="text" class="form-control" name="linha" id="linha" value="'+ (isPost? request.post.linha : '') +'" placeholder="valor de 1 a 8"></div>');
+    response.write(' <div class="form-group"><label for="coluna">Coluna: </label> <input type="text" class="form-control" name="coluna" id="coluna" value="'+ (isPost? request.post.coluna : '') +'" placeholder="valor de A a H"></div>');
+    response.write(' <button type="submit" class="btn btn-default">Adicionar cavalo</button></form><br/><br/>');
+
+    if(isPost) {
+        var linha = parseInt(request.post.linha);
+        var coluna = request.post.coluna;
+
+        if(isNaN(linha) || !(typeof coluna === 'string') || coluna.length !== 1 || linha < 1 || linha > 8 || coluna.charCodeAt(0) < 65 || coluna.charCodeAt(0) > 72) {
+            response.write('<p class="text-center">Valores inválidos da posição!</p>');
+            isPost = false;
+        } else {
+            linha = 8-linha;
+            coluna = coluna.charCodeAt(0) - 65;
+        }
     }
-    response.write('</p></body></html>');
+
+    response.write('<table id="chess"><thead><tr><th></th><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th><th>F</th><th>G</th><th>H</th><th></th></tr></thead><tbody>');
+    for(var i = 0; i < 8; i++){
+        response.write('<tr><th>'+(8-i)+'</th>');
+        for(var j = 0; j < 8; j++){
+            if(isPost) {
+                if(i === linha && j === coluna)
+                    response.write('<td>&#9816;</td>');
+                else if (isReacheable(linha, coluna, i, j))
+                    response.write('<td>&otimes;</td>');
+                else
+                    response.write('<td></td>');
+            } else
+             response.write('<td></td>');
+        }
+        response.write('<th>'+(8-i)+'</th>');
+        response.write('</tr>');
+    }
+    response.write('<tr><th></th><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th><th>F</th><th>G</th><th>H</th><th></th></tr></tbody></table>');
+    response.write(template.footer);
     response.end();
 }
 
@@ -209,4 +244,4 @@ exports.about = about;
 exports.random = random;
 exports.prime = prime;
 exports.equation = equation;
-exports.intervalo = intervalo;
+exports.chess = chess;
