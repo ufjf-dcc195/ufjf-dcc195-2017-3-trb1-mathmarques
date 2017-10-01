@@ -15,6 +15,7 @@ handlers['/notfound.html'] = requestHandlers.notFound;
 handlers['/'] = requestHandlers.index;
 handlers['/index.html'] = requestHandlers.index;
 handlers['/sobre.html'] = requestHandlers.about;
+handlers['/aleatorios.html'] = requestHandlers.random;
 handlers['/intervalo.html'] = requestHandlers.intervalo;
 
 server.start(router, handlers);

@@ -59,6 +59,37 @@ function about(request, response) {
     response.end();
 }
 
+// Aleatorios
+function random(request, response) {
+    var even = [];
+    var odd = [];
+
+    for(var i = 0; i < 100; i++){
+        var num = Math.floor((Math.random() * 10000) + 1);
+        if(num%2 === 0)
+            even.push(num);
+        else
+            odd.push(num);
+    }
+
+    response.writeHead(200, {'Content-Type': 'text/html'});
+    response.write(template.header);
+    response.write('<h2 class="text-center">#Aleatórios</h2>');
+    response.write('<div class="row"><div class="col-md-6">');
+    response.write('<h3 class="text-center">Ímpar</h3><ul>');
+    odd.forEach(function (value) {
+        response.write('<li>'+value+'</li>');
+    });
+    response.write('</ul></div><div class="col-md-6">');
+    response.write('<h3 class="text-center">Par</h3><ul>');
+    even.forEach(function (value) {
+        response.write('<li>'+value+'</li>');
+    });
+    response.write('</ul></div></div>');
+    response.write(template.footer);
+    response.end();
+}
+
 function intervalo(request, response) {
     response.writeHead(200, {'Content-Type': 'text/html'});
     response.write('<!DOCTYPE html><html><head></head><body>');
@@ -82,4 +113,5 @@ exports.staticFiles = staticFiles;
 exports.notFound = notFound;
 exports.index = index;
 exports.about = about;
+exports.random = random;
 exports.intervalo = intervalo;
