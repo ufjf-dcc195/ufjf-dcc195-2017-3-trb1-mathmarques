@@ -16,6 +16,7 @@ handlers['/'] = requestHandlers.index;
 handlers['/index.html'] = requestHandlers.index;
 handlers['/sobre.html'] = requestHandlers.about;
 handlers['/aleatorios.html'] = requestHandlers.random;
+handlers['/primos.html'] = requestHandlers.prime;
 handlers['/intervalo.html'] = requestHandlers.intervalo;
 
 server.start(router, handlers);

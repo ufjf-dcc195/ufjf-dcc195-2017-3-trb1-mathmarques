@@ -90,6 +90,50 @@ function random(request, response) {
     response.end();
 }
 
+// Primos
+function prime(request, response) {
+    function isPrime(num) {
+        var prime = true;
+
+        if(num === 1 || (num !== 2 && num%2 === 0))
+            prime = false;
+        else {
+            var lim = Math.sqrt(num) + 1;
+            for(var i = 3; i < lim; i += 2)
+                if(num%i === 0) {
+                    prime = false;
+                    break;
+                }
+        }
+
+        return prime;
+    }
+
+    response.writeHead(200, {'Content-Type': 'text/html'});
+    response.write(template.header);
+    response.write('<h2 class="text-center">#Primos</h2>');
+    if(!request.parsedUrl.query.N1 || !request.parsedUrl.query.N2){
+        response.write('<p class="text-center">Parâmetros ausentes! Envie N1 e N2 pela query</p>');
+    } else {
+        var N1 = parseInt(request.parsedUrl.query.N1);
+        var N2 = parseInt(request.parsedUrl.query.N2);
+
+        if(isNaN(N1) || isNaN(N2) || N1 >= N2 || N2 >= 100 || N1 <= 0) {
+            response.write('<p class="text-center">Parâmetros inválidos! Insira N1 e N2 respeitando: N1 < N2 < 100</p>');
+        } else {
+            response.write('<p>Lista de primos entre '+ N1 +' e '+ N2 +':</p><ul>');
+            response.write('<ul>');
+            for(;N1 <= N2; N1++) {
+                if(isPrime(N1))
+                    response.write('<li>'+N1+'</li>');
+            }
+            response.write('</ul>');
+        }
+    }
+    response.write(template.footer);
+    response.end();
+}
+
 function intervalo(request, response) {
     response.writeHead(200, {'Content-Type': 'text/html'});
     response.write('<!DOCTYPE html><html><head></head><body>');
@@ -114,4 +158,5 @@ exports.notFound = notFound;
 exports.index = index;
 exports.about = about;
 exports.random = random;
+exports.prime = prime;
 exports.intervalo = intervalo;
