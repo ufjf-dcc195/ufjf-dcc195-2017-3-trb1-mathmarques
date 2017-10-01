@@ -1,2 +1,2 @@
-# ufjf-dcc195-2017-3-trb1-mathmarques
-ufjf-dcc195-2017-3-trb1-mathmarques created by GitHub Classroom
+# Trabalho 1 - DCC195
+Disponivel em: [https://dcc195-trab1.herokuapp.com/](https://dcc195-trab1.herokuapp.com/)

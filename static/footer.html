@@ -1,0 +1,17 @@
+</div>
+</div>
+</div>
+
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.js"></script>
+<script language="javascript" type="text/javascript">
+    $( "#jsonGenerate" ).click(function() {
+        $('#chessForm').attr('action', 'xadrez.json');
+        $('#chessForm').attr('target', '_blank');
+        $('#chessForm').submit();
+        $('#chessForm').attr('action', '');
+        $('#chessForm').attr('target', '');
+    });
+</script>
+</body>
+</html>
