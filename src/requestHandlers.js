@@ -122,11 +122,16 @@ function prime(request, response) {
             response.write('<p class="text-center">Parâmetros inválidos! Insira N1 e N2 respeitando: N1 < N2 < 100</p>');
         } else {
             response.write('<p>Lista de primos entre '+ N1 +' e '+ N2 +':</p><ul>');
+            var found = false;
             response.write('<ul>');
             for(;N1 <= N2; N1++) {
-                if(isPrime(N1))
-                    response.write('<li>'+N1+'</li>');
+                if (isPrime(N1)) {
+                    found = true;
+                    response.write('<li>' + N1 + '</li>')
+                }
             }
+            if(!found)
+                response.write('<li>Não existem números primo neste intervalo!</li>');
             response.write('</ul>');
         }
     }
