@@ -191,10 +191,11 @@ function chess(request, response) {
     response.writeHead(200, {'Content-Type': 'text/html'});
     response.write(template.header);
     response.write('<h2 class="text-center">#Xadrez</h2>');
-    response.write('<form class="form-inline" method="POST">');
+    response.write('<form class="form-inline" method="POST" id="chessForm">');
     response.write('<div class="form-group"><label for="linha">Linha: </label> <input type="text" class="form-control" name="linha" id="linha" value="'+ (isPost? request.post.linha : '') +'" placeholder="valor de 1 a 8"></div>');
     response.write(' <div class="form-group"><label for="coluna">Coluna: </label> <input type="text" class="form-control" name="coluna" id="coluna" value="'+ (isPost? request.post.coluna : '') +'" placeholder="valor de A a H"></div>');
-    response.write(' <button type="submit" class="btn btn-default">Adicionar cavalo</button></form><br/><br/>');
+    response.write(' <button type="submit" class="btn btn-default">Adicionar cavalo</button>');
+    response.write(' <button type="button" class="btn btn-default" id="jsonGenerate">Gerar json</button></form><br/><br/>');
 
     var board;
     if(isPost) {
@@ -218,6 +219,29 @@ function chess(request, response) {
     response.end();
 }
 
+// Xadrez json
+function jsonChess (request, response) {
+    var isPost = (request.method === 'POST');
+    response.writeHead(200, {'Content-Type': 'application/json;  charset=utf-8'});
+    var jsonRes = {};
+
+    if(isPost) {
+        var linha = parseInt(request.post.linha);
+        var coluna = request.post.coluna;
+
+        if(isNaN(linha) || !(typeof coluna === 'string') || coluna.length !== 1 || linha < 1 || linha > 8 || coluna.charCodeAt(0) < 65 || coluna.charCodeAt(0) > 72) {
+            jsonRes.error = 'Valores inválidos da posição!';
+        } else {
+            jsonRes = chessLib.renderJson(linha, coluna);
+        }
+    } else {
+        jsonRes.error = 'Você deve enviar um POST com linha e coluna';
+    }
+
+    response.write(JSON.stringify(jsonRes));
+    response.end();
+}
+
 exports.staticFiles = staticFiles;
 exports.notFound = notFound;
 exports.index = index;
@@ -226,3 +250,4 @@ exports.random = random;
 exports.prime = prime;
 exports.equation = equation;
 exports.chess = chess;
+exports.jsonChess = jsonChess;

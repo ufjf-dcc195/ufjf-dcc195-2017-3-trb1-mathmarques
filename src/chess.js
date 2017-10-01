@@ -28,4 +28,23 @@ function renderBoard(horseLinha, horseColuna) {
     return board;
 }
 
+function renderJson(linha, coluna) {
+    var jsonRes = {};
+    jsonRes.cavalo = {'linha': linha, 'coluna': coluna};
+    jsonRes.movimentos = [];
+
+    linha = 8 - linha;
+    coluna = coluna.charCodeAt(0) - 65;
+
+
+    for (var i = 0; i < 8; i++)
+        for (var j = 0; j < 8; j++)
+            if (isReacheable(linha, coluna, i, j)) {
+                jsonRes.movimentos.push({'linha': (8 - i), 'coluna': String.fromCharCode(j + 65)});
+            }
+
+    return jsonRes;
+}
+
 exports.renderBoard = renderBoard;
+exports.renderJson = renderJson;
