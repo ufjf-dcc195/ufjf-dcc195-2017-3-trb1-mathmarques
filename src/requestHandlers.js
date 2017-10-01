@@ -174,7 +174,7 @@ function equation(request, response) {
                 else if(delta === 0)
                     response.write('<p class="text-center"><b>Solução: </b> raíz única(delta = 0) = '+ (-b)/(2*a) +'</p>');
                 else
-                    response.write('<p class="text-center"><b>Solução: </b> x\' = '+ ((-b)+Math.sqrt(delta))/(2*a) +' e x\' = '+ ((-b)-Math.sqrt(delta))/(2*a) +'</p>');
+                    response.write('<p class="text-center"><b>Solução: </b> x\' = '+ ((-b)+Math.sqrt(delta))/(2*a) +' e x\'\' = '+ ((-b)-Math.sqrt(delta))/(2*a) +'</p>');
             }
         }
 
