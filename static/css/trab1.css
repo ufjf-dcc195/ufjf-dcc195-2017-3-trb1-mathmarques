@@ -40,12 +40,12 @@ body {
     color: black;
 }
 
-#chess tr:nth-child(even) td:nth-child(odd) {
+#chess tr:nth-child(even) td:nth-child(even) {
     background-color: #000000;
     color: white;
 }
 
-#chess tr:nth-child(odd) td:nth-child(even) {
+#chess tr:nth-child(odd) td:nth-child(odd) {
     background-color: #000000;
     color: white;
 }
